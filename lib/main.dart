@@ -54,67 +54,80 @@ class _MyAppState extends State<MyApp> {
     allPrices = fetchCoinPrice();
   }
 
+  void _refreshPrices() {
+    setState(() {
+      allPrices = fetchCoinPrice();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Fetch Data Example',
+      title: 'Fetch Coin Prices Example',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Fetch Data Example'),
+          title: const Text('Fetch Coin Prices Example'),
         ),
         body: SingleChildScrollView(
-            child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ListTile(
-                      title: Text("BTC Price:"),
-                      subtitle: FutureBuilder<CoinPrice>(
-                        future: allPrices,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return Text("\$" + snapshot.data!.bitcoin);
-                          } else if (snapshot.hasError) {
-                            return Text('${snapshot.error}');
-                          }
-                          return const CircularProgressIndicator();
-                        },
-                      ),
-                    ),
-                    ListTile(
-                      title: Text("LTC Price:"),
-                      subtitle: FutureBuilder<CoinPrice>(
-                        future: allPrices,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return Text("\$" + snapshot.data!.litecoin);
-                          } else if (snapshot.hasError) {
-                            return Text('${snapshot.error}');
-                          }
-                          return const CircularProgressIndicator();
-                        },
-                      ),
-                    ),
-                    ListTile(
-                      title: Text("ETH Price:"),
-                      subtitle: FutureBuilder<CoinPrice>(
-                        future: allPrices,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return Text("\$" + snapshot.data!.ethereum);
-                          } else if (snapshot.hasError) {
-                            return Text('${snapshot.error}');
-                          }
-                          return const CircularProgressIndicator();
-                        },
-                      ),
-                    ),
-                  ],
-                ))),
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ListTile(
+                  title: Text("BTC Price:"),
+                  subtitle: FutureBuilder<CoinPrice>(
+                    future: allPrices,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Text("\$" + snapshot.data!.bitcoin);
+                      } else if (snapshot.hasError) {
+                        return Text('${snapshot.error}');
+                      }
+                      return const CircularProgressIndicator();
+                    },
+                  ),
+                ),
+                ListTile(
+                  title: Text("LTC Price:"),
+                  subtitle: FutureBuilder<CoinPrice>(
+                    future: allPrices,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Text("\$" + snapshot.data!.litecoin);
+                      } else if (snapshot.hasError) {
+                        return Text('${snapshot.error}');
+                      }
+                      return const CircularProgressIndicator();
+                    },
+                  ),
+                ),
+                ListTile(
+                  title: Text("ETH Price:"),
+                  subtitle: FutureBuilder<CoinPrice>(
+                    future: allPrices,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Text("\$" + snapshot.data!.ethereum);
+                      } else if (snapshot.hasError) {
+                        return Text('${snapshot.error}');
+                      }
+                      return const CircularProgressIndicator();
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _refreshPrices,
+          tooltip: 'Refresh Prices',
+          child: Icon(Icons.refresh),
+        ),
       ),
     );
   }
