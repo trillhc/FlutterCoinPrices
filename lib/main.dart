@@ -10,7 +10,7 @@ Future<CoinPrice> fetchCoinPrice() async {
   if (response.statusCode == 200) {
     return CoinPrice.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Failed to load CoinPrice');
+    throw Exception('Failed to load Price of Coin');
   }
 }
 
